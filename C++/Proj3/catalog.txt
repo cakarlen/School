@@ -1,0 +1,12 @@
+00215 CS   215   4 Intro to Program Design
+00115 CS   115   3 Intro to Comp Programming
+11101 EGR  101   1 Engineering Exploration I
+11102 EGR  102   2 Engineering Computing
+11103 EGR  103   2 Engineering Exploration II
+22113 MA   113   4 Calculus I
+22114 MA   114   4 Calculus II
+33101 SPA  101   4 Spanish I
+44101 ENG  101   3 Writing I
+55109 KHP  109   1 Mud Wrestling
+66000 TEST 000  -1 Test Invalid Hours
+XXXXX XXX XXX    0 End of List
