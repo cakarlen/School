@@ -1,0 +1,21 @@
+Name: Chase Karlen
+Section: 002
+
+1. Missing parenthesis on the 20th line of "average.py"
+2. File "/Users/chasekarlen/Documents/School/Junior, 2nd semester/CS115/.idea/average.py", line 23
+   value2 = float(input("Second Number: "))
+         ^
+   SyntaxError: invalid syntax
+   Process finished with exit code 1
+3. I was able to fix the syntax error by going to the line that threw the error
+   and added a parenthesis to the very end of the statement
+4. There was a semantics error in the program on line 26 when
+   calculating the average. When taking an average, one must
+   add the numbers and then divide by the same amount of numbers
+   that were added together. In the program, it was trying to divide
+   one number by two before adding the two numbers together first
+   and then dividing that by two.
+5. The error was on line 20.
+6. I was able to fix the semantics error by putting parenthesis
+   around value1 and value2 to first add the two values and then
+   dividing by the result of the addition.
