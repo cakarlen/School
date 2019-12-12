@@ -122,15 +122,17 @@ void LList::insert(int k, string d) {
         if (newNode->key == head->key) {
             // Put old head node in newNode dup
             newNode->dup = head;
+            // Put new node next to old head node next
+            newNode->next = newNode->dup->next;
             // Null old head node next
             newNode->dup->next = NULL;
             // Init head to newNode
             head = newNode;
         } else {
-//            newNode->next = findB4->next;
-            findB4->next->next = NULL;
-            newNode->dup = findB4->next;
             findB4->next = newNode;
+            newNode->dup = foundSearch;
+            newNode->next = foundSearch->next;
+            foundSearch->next = NULL;
         }
     } else {
         // Didn't find
@@ -151,20 +153,31 @@ void LList::insert(int k, string d) {
 // (including setting the NEXT pointer in the node to NULL)
 //----------------------------------------------------
 bool LList::remove(node * r) {
+    if (head == NULL) {
+        return false;
+    }
+    
+    if (r == NULL) {
+        return false;
+    }
+    
     if (r == head) {
         head = head->next;
-    } else {
+    } else { // must find node BEFORE one being removed
         node * b4 = head;
-        
-        while (b4->next != r) {
+        while (b4->next != r && b4 != NULL) {
             b4 = b4->next;
         }
+        
+        if (b4 == NULL) {
+            return false;
+        }
+        
         b4->next = r->next;
-        return true;
     }
     
     r->next = NULL;
-    return false;
+    return true;
 } // remove()
 
 //----------------------------------------------------
@@ -179,11 +192,17 @@ bool LList::remove(node * r) {
 //----------------------------------------------------
 bool LList::drop(int k) {
     node *print = head;
+    bool result;
     
     while (print != NULL) {
         if (print->key == k) {
-            delete print;
-            return remove(print);
+            result = remove(print);
+            if (result) {
+                delete print;
+                return result;
+            } else {
+                return false;
+            }
         }
         
         print = print->next;
@@ -198,22 +217,22 @@ bool LList::drop(int k) {
 // Returns: a pointer to the node with the highest key
 //          or NULL when there list is empty.
 node * LList::max() {
-    int max = 0;
+    node *n = head;
+    node *maxNode = head;
     
-    node * p = head;
-    while (p != NULL) {
-        if (max < p->key) {
-            max = p->key;
-        }
-        
-        if (max == p->key) {
-            return p;
-        }
-        
-        p = p->next;
+    if (head == NULL) {
+        return NULL;
     }
     
-    return NULL;
+    while (n != NULL) {
+        if (n->key > maxNode->key) {
+            maxNode = n;
+        }
+        
+        n = n->next;
+    }
+    
+    return maxNode;
 } // max()
 
 //----------------------------------------------------
@@ -221,7 +240,29 @@ node * LList::max() {
 //----------------------------------------------------
 // Sorts the list in ascending order by key values
 void LList::sort() {
-
+    node *oldHead = head;
+    node *newHead = NULL;
+    node *n = NULL;
+    
+    while (oldHead != NULL) {
+        n = max();
+        remove(n);
+        
+        if (newHead == NULL) {
+            newHead = n;
+        } else {
+            if (!n->next) {
+                n->next = newHead;
+                newHead = n;
+            } else {
+                newHead = n;
+            }
+        }
+        
+        oldHead = oldHead->next;
+    }
+    
+    head = newHead;
 } // sort()
 
   //----------------------------------------------------
